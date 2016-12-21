@@ -38,8 +38,8 @@ const VueDragZone = require('vue-drag-zone')
 // use
 Vue.use(VueDragZone)
 
+
 // or use with component(ES6)
-import Vue from 'vue'
 import { dragZone, dragHandle } from 'vue-drag-zone'
 
 // use
@@ -52,7 +52,7 @@ export default {
 ```
 
 ``` html
-<!-- use with components -->
+<!-- base use -->
 <drag-zone class="zone">
   <div class="item i1">item1</div>
   <drag-handle class="handle">H</drag-handle>
