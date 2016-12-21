@@ -1,0 +1,32 @@
+{
+  "name": "vue-drag-zone",
+  "version": "1.0.0",
+  "description": "Drag Zone component for Vue.js(1.x ~ 2.x)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "jquery": "^3.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/surmon-china/vue-drag-zone.git"
+  },
+  "keywords": [
+    "vue-drag-zone",
+    "vue drag dom",
+    "vue drag size",
+    "vue drag"
+  ],
+  "author": {
+    "name": "Surmon",
+    "email": "surmon@foxmail.com",
+    "url": "http://surmon.me"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/surmon-china/vue-drag-zone/issues"
+  },
+  "homepage": "https://github.com/surmon-china/vue-drag-zone#readme"
+}
