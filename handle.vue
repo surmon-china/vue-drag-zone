@@ -189,7 +189,7 @@
                 // 最大minwidth
                 let nextElementsMinMaxWidth = Math.max.apply(null, elementsWidths(nextElementsToDo, 'minWidth', true))
 
-                console.log(average, nextElementsMinMaxWidth)
+                // console.log(average, nextElementsMinMaxWidth)
 
                 // 如果平均分配的值大于最大的minwidth，则平均分配
                 if (average >= nextElementsMinMaxWidth) {
@@ -208,7 +208,7 @@
                   })
                   // 给没有minwidth的设置(toDoWidth - minwidth之和) / 自己数量
                   $(notHasMinWidthElements).css(buildStyle, (toDoWidth - nextElementsMinMaxWidth) / notHasMinWidthElements.length)
-                  console.log($(notHasMinWidthElements))
+                  // console.log($(notHasMinWidthElements))
                 }
               }
             }

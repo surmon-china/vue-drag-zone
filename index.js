@@ -1,8 +1,7 @@
  /**
  *
- * Vue-touch-ripple
- * Adapted from rippleJS (https://github.com/samthor/rippleJS)
- * removed jQuery
+ * Vue-Drag-Zone
+ * Author @Surmon.me
  *
  */
 

@@ -30,7 +30,7 @@ import Vue from 'vue'
 import VueDragZone from 'vue-drag-zone'
 
 
-// require with Webpack/Node.js
+// require with Webpack
 const Vue = require('vue')
 const VueDragZone = require('vue-drag-zone')
 
