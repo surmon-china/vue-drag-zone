@@ -6,7 +6,17 @@
 
 <script>
   export default {
-    name: 'drag-zone'
+    name: 'drag-zone',
+    props: {
+      options: {
+        type: Object,
+        default() {
+          return {
+            direction: 'horizontal'
+          }
+        }
+      }
+    }
   }
 </script>
 

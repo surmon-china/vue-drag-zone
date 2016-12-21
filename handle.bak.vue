@@ -1,5 +1,5 @@
 <template>
-  <div class="drag-handle" :class="{ 'disabled': disabled, 'horizontal': horizontal, 'vertical': !horizontal }">
+  <div class="drag-handle" :class="{ 'disabled': disabled }">
     <slot></slot>
   </div>
 </template>
@@ -12,97 +12,84 @@
     mounted() {
       this.dragHandleBuild()
     },
-    computed: {
-      horizontal() {
-        return Object.is(this.$parent.options.direction, 'horizontal')
-      }
-    },
     methods: {
       dragHandleBuild() {
 
+        // self
         let self = this
-
-        // 模式
-        let horizontal = self.horizontal
 
         // 父容器宽高信息
         let $wrap = $(this.$parent.$el)
 
         // 父容器宽度
         let warpClientWidth = $wrap[0].clientWidth
-        let warpClientHeight = $wrap[0].clientHeight
 
         // 载体本身
-        let $currentHandle = $(this.$el)
+        let $currentLabel = $(this.$el)
 
         // 载体宽高
-        let currentHandleWidth = $currentHandle[0].clientWidth
-        let currentHandleHeight = $currentHandle[0].clientHeight
+        let currentLabelWidth = $currentLabel[0].clientWidth
+        let currentLabelHeight = $currentLabel[0].clientHeight
 
         // 计算元素组的指定属性之和
-        let elementsAttrs = (elements = [], attr = 'minWidth', notReduce = false) => {
+        let elementsWidths = (elements = [], attr = 'minWidth', notReduce = false) => {
           if (!elements.length) return 0
-          let elementsArr =  Array.from(elements).map(element => {
-            let elementAttr = $(element).css(attr)
-            if (!elementAttr || elementAttr === 'auto') {
-              elementAttr = 0
+          let elementsArr =  Array.from(elements).map(label => {
+            let labelWidth = $(label).css(attr)
+            if (!labelWidth || labelWidth === 'auto') {
+              labelWidth = 0
             } else {
-              elementAttr = parseInt(elementAttr)
+              labelWidth = parseInt(labelWidth)
             }
-            return elementAttr
+            return labelWidth
           })
           return notReduce ? elementsArr : elementsArr.reduce((preValue, curValue) => { return preValue + curValue })
         }
 
         // 给当前label绑定事件
-        $currentHandle.bind('mousedown', function(e) {
+        $currentLabel.bind('mousedown', function(e) {
 
           // 判断是否禁用
           if (self.disabled) return false
 
-          // 父容器绝对位置
+          console.log(this.$parent)
+
+          // 父容器左边绝对位置
           let wrapOffsetLeft = $wrap.offset().left
-          let wrapOffsetTop = $wrap.offset().top
 
           // 要设置的属性
-          let buildStyle = horizontal ? 'width' : 'height'
+          let buildStyle = 'width'
 
           // 获取前后的所有兄弟元素
-          let $prevAll = $currentHandle.prevAll()
-          let $nextAll = $currentHandle.nextAll()
-          let $prevHandles = $prevAll.filter('.drag-handle')
-          let $nextHandles = $nextAll.filter('.drag-handle')
-          let $prevHandle = $prevHandles[0] ? $($prevHandles[0]) : null
-          let $nextHandle = $nextHandles[0] ? $($nextHandles[0]) : null
-          let prevHandleOffsetLeft = null
-          let nextHandleOffsetLeft = null
-          let prevHandleOffsetTop = null
-          let nextHandleOffsetTop = null
+          let $prevAll = $currentLabel.prevAll()
+          let $nextAll = $currentLabel.nextAll()
+          let $prevLabels = $prevAll.filter('.drag-handle')
+          let $nextLabels = $nextAll.filter('.drag-handle')
+          let $prevLabel = $prevLabels[0] ? $($prevLabels[0]) : null
+          let $nextLabel = $nextLabels[0] ? $($nextLabels[0]) : null
+          let prevLabelOffsetLeft = null
+          let nextLabelOffsetLeft = null
+          let prevLabelOffsetTop = null
+          let nextLabelOffsetTop = null
 
-          // 获取到前后紧邻的Handle的距左/上距离
-          if ($prevHandles.length) {
-            horizontal && (prevHandleOffsetLeft = $($prevHandles[0]).offset().left)
-            !horizontal && (prevHandleOffsetTop = $($prevHandles[0]).offset().top)
-          }
-          if ($nextHandles.length) {
-            horizontal && (nextHandleOffsetLeft = $($nextHandles[0]).offset().left)
-            !horizontal && (nextHandleOffsetTop = $($nextHandles[0]).offset().top)
-          }
+          // 获取到前后紧邻的Label的距左距离
+          if ($prevLabels.length) prevLabelOffsetLeft = $($prevLabels[0]).offset().left
+          if ($nextLabels.length) nextLabelOffsetLeft = $($nextLabels[0]).offset().left
 
           // 前面需要设置样式的元素集合
-          let prevElementsToDo = $prevHandle ? $currentHandle.prevUntil('.drag-handle') : $prevAll
+          let prevElementsToDo = $prevLabel ? $currentLabel.prevUntil('.drag-handle') : $prevAll
 
           // 后面需要设置样式的元素集合
-          let nextElementsToDo = $nextHandle ? $currentHandle.nextUntil('.drag-handle') : $nextAll
+          let nextElementsToDo = $nextLabel ? $currentLabel.nextUntil('.drag-handle') : $nextAll
 
           // 前面的元素的最小宽度之和
-          let prevElementsMinWidths = elementsAttrs(prevElementsToDo)
+          let prevElementsMinWidths = elementsWidths(prevElementsToDo)
 
           // 前面的元素的最大宽度之和
-          let prevElementsMaxWidths = elementsAttrs(prevElementsToDo, 'maxWidth')
+          let prevElementsMaxWidths = elementsWidths(prevElementsToDo, 'maxWidth')
 
           // 后面的元素的最小宽度之和
-          let nextElementsMinWidths = elementsAttrs(nextElementsToDo)
+          let nextElementsMinWidths = elementsWidths(nextElementsToDo)
 
           // 监听移动
           $(document).bind('mousemove', function(event) {
@@ -117,7 +104,7 @@
             // 如果左边有label，则应该是label的左边距加左边label的宽度
             // 如果左边没有label，则应该是父容器的距左距离
             // 无论什么情况，如果左边元素有min属性，则应该要加上min属性值的总和
-            let minScope = ($prevHandle ? (prevHandleOffsetLeft + $prevHandle[0].clientWidth) : wrapOffsetLeft) + prevElementsMinWidths
+            let minScope = ($prevLabel ? (prevLabelOffsetLeft + $prevLabel[0].clientWidth) : wrapOffsetLeft) + prevElementsMinWidths
 
             // 可移动的最大范围
 
@@ -128,11 +115,11 @@
             //  - 无论上面任意情况，如果右边元素有min属性，则应该要减去这个属性值的总和
             let maxScope
             if (!!prevElementsMaxWidths) {
-              maxScope = prevElementsMaxWidths + ($prevHandle ? (prevHandleOffsetLeft + $prevHandle[0].clientWidth) : wrapOffsetLeft)
+              maxScope = prevElementsMaxWidths + ($prevLabel ? (prevLabelOffsetLeft + $prevLabel[0].clientWidth) : wrapOffsetLeft)
             } else {
-              if (nextHandleOffsetLeft) maxScope = nextHandleOffsetLeft
-              if (!nextHandleOffsetLeft) maxScope = warpClientWidth + wrapOffsetLeft
-              maxScope -= (currentHandleWidth + nextElementsMinWidths)
+              if (nextLabelOffsetLeft) maxScope = nextLabelOffsetLeft
+              if (!nextLabelOffsetLeft) maxScope = warpClientWidth + wrapOffsetLeft
+              maxScope -= (currentLabelWidth + nextElementsMinWidths)
             }
 
             // 限制最大最小范围
@@ -142,8 +129,8 @@
             // 设置左边元素的宽度
             if (prevElementsToDo.length) {
               let toDoWidth
-              if (prevHandleOffsetLeft) {
-                toDoWidth = mouseX - prevHandleOffsetLeft - currentHandleWidth
+              if (prevLabelOffsetLeft) {
+                toDoWidth = mouseX - prevLabelOffsetLeft - currentLabelWidth
               } else {
                 toDoWidth = mouseX - wrapOffsetLeft
               }
@@ -155,7 +142,7 @@
                 let average = toDoWidth / prevElementsToDo.length
 
                 // 最大minwidth
-                let prevElementsMinMaxWidth = Math.max.apply(null, elementsAttrs(prevElementsToDo, 'minWidth', true))
+                let prevElementsMinMaxWidth = Math.max.apply(null, elementsWidths(prevElementsToDo, 'minWidth', true))
 
                 // console.log(average, prevElementsMinMaxWidth)
 
@@ -185,12 +172,12 @@
             if (nextElementsToDo.length) {
 
               let toDoWidth
-              if (nextHandleOffsetLeft) {
-                toDoWidth = nextHandleOffsetLeft - mouseX
+              if (nextLabelOffsetLeft) {
+                toDoWidth = nextLabelOffsetLeft - mouseX
               } else {
                 toDoWidth = warpClientWidth - (mouseX - wrapOffsetLeft)
               }
-              toDoWidth -= currentHandleWidth
+              toDoWidth -= currentLabelWidth
 
               // 如果toDoWidth还大于minwidth之和，则分配
               if (toDoWidth > nextElementsMinWidths) {
@@ -199,7 +186,7 @@
                 let average = toDoWidth / nextElementsToDo.length
 
                 // 最大minwidth
-                let nextElementsMinMaxWidth = Math.max.apply(null, elementsAttrs(nextElementsToDo, 'minWidth', true))
+                let nextElementsMinMaxWidth = Math.max.apply(null, elementsWidths(nextElementsToDo, 'minWidth', true))
 
                 // console.log(average, nextElementsMinMaxWidth)
 
@@ -238,11 +225,8 @@
 </script>
 
 <style scoped>
-  .drag-handle.horizontal {
+  .drag-handle {
     cursor: e-resize;
-  }
-  .drag-handle.vertical {
-    cursor: n-resize;
   }
   .drag-handle.disabled {
     opacity: .5;

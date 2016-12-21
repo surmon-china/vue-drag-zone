@@ -2,7 +2,7 @@
   <md-card>
     <md-card-actions v-md-ink-ripple>
       <div class="md-subhead">
-        <span>Disabled Example</span>
+        <span>Horizontal Disabled Example</span>
       </div>
       <md-button class="md-icon-button"
                  target="_blank"
@@ -14,12 +14,12 @@
       <!-- drag-zone -->
       <drag-zone class="zone">
         <div class="item i1">item1</div>
-        <drag-handle class="handle">H</drag-handle>
+        <drag-handle class="handle"></drag-handle>
         <div class="item i2">item2</div>
         <div class="item i3">item3</div>
-        <drag-handle class="handle">H</drag-handle>
+        <drag-handle class="handle"></drag-handle>
         <div class="item i4">item4</div>
-        <drag-handle class="handle" :disabled="disabledHandle">H</drag-handle>
+        <drag-handle class="handle" :disabled="disabledHandle"></drag-handle>
         <div class="item i5">item5</div>
       </drag-zone>
     </md-card-media>

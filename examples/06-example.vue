@@ -2,7 +2,7 @@
   <md-card>
     <md-card-actions v-md-ink-ripple>
       <div class="md-subhead">
-        <span>Horizontal MinWdith and MaxWidth Example</span>
+        <span>MinWdith and MaxWidth Example</span>
       </div>
       <md-button class="md-icon-button"
                  target="_blank"
@@ -14,12 +14,12 @@
       <!-- drag-zone -->
       <drag-zone class="zone">
         <div class="item i1">min 100px && max 30rem</div>
-        <drag-handle class="handle"></drag-handle>
+        <drag-handle class="handle">H</drag-handle>
         <div class="item i2">item2</div>
-        <drag-handle class="handle"></drag-handle>
+        <drag-handle class="handle">H</drag-handle>
         <div class="item i3">item3</div>
         <div class="item i4">min 50px</div>
-        <drag-handle class="handle" disabled></drag-handle>
+        <drag-handle class="handle" disabled>H</drag-handle>
         <div class="item i5">min 10em</div>
       </drag-zone>
     </md-card-media>
