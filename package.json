@@ -1,7 +1,7 @@
 {
   "name": "vue-drag-zone",
-  "version": "1.0.0",
-  "description": "Drag Zone component for Vue.js(1.x ~ 2.x)",
+  "version": "1.2.0",
+  "description": "Drag Zone component for Vue.js(2.x)",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

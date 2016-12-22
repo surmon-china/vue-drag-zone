@@ -7,8 +7,11 @@
 [![NPM](https://nodei.co/npm/vue-drag-zone.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/vue-drag-zone/)
 
 
-# Vue-Drag-Zone
-Drag Zone component for Vue.js(2.x)，适用于Vue2的dom拖动组件。
+> ### v1.2.0
+> 增加：支持竖向拖动、min-height、max-height属性（还有bug，求修复）
+
+> ### v1.0.0
+> 依赖jquery，支持横向拖动、disabled、min-width、max-width属性
 
 
 # Example
@@ -73,20 +76,31 @@ export default {
   <drag-handle class="handle">H</drag-handle>
   <div class="item i3">item3</div>
   <div class="item i4">item4</div>
-  <drag-handle class="handle" disabled>H</drag-handle>
+  <drag-handle class="handle" :disabled="true">H</drag-handle>
   <div class="item i5">item5</div>
 </drag-zone>
 
 <!-- min width and max width -->
 <drag-zone class="zone">
-  <div class="item i1" style="min-width: 100px;max-width: 300px;">min 100px && max 300px</div>
-  <drag-handle class="handle">H</drag-handle>
+  <div class="item i1">min 100px && max 30rem</div>
+  <drag-handle class="handle"></drag-handle>
   <div class="item i2">item2</div>
-  <drag-handle class="handle">H</drag-handle>
+  <drag-handle class="handle"></drag-handle>
   <div class="item i3">item3</div>
-  <div class="item i4" style="min-width: 50px;">min 50px</div>
-  <drag-handle class="handle" disabled>H</drag-handle>
-  <div class="item i5" style="min-width: 100px;">min 100px</div>
+  <div class="item i4">min 50px</div>
+  <drag-handle class="handle"></drag-handle>
+  <div class="item i5">min 10em</div>
+</drag-zone>
+
+<drag-zone class="zone" :options="{ direction: 'vertical' }">
+  <div class="item i1">item1</div>
+  <drag-handle class="handle"></drag-handle>
+  <div class="item i2">item2</div>
+  <drag-handle class="handle"></drag-handle>
+  <div class="item i3">item3</div>
+  <div class="item i4">item4</div>
+  <drag-handle class="handle"></drag-handle>
+  <div class="item i5">item5</div>
 </drag-zone>
 ```
 

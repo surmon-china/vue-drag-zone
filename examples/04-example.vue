@@ -2,25 +2,25 @@
   <md-card>
     <md-card-actions v-md-ink-ripple>
       <div class="md-subhead">
-        <span>Vertical Base Example</span>
+        <span>Vertical MinHeight and MaxHeight Example</span>
       </div>
       <md-button class="md-icon-button"
                  target="_blank"
-                 href="https://github.com/surmon-china/vue-drag-zone/tree/master/examples/01-example.vue">
+                 href="https://github.com/surmon-china/vue-drag-zone/tree/master/examples/05-example.vue">
         <md-icon>code</md-icon>
       </md-button>
     </md-card-actions>
     <md-card-media>
       <!-- drag-zone -->
       <drag-zone class="zone" :options="{ direction: 'vertical' }">
-        <div class="item i1">item1</div>
+        <div class="item i1">min-height: 60px max-height: 20rem</div>
         <drag-handle class="handle"></drag-handle>
         <div class="item i2">item2</div>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i3">item3</div>
+        <div class="item i3">min-height: 70px</div>
         <div class="item i4">item4</div>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i5">item5</div>
+        <div class="item i5">min-height: 5em</div>
       </drag-zone>
     </md-card-media>
   </md-card>
@@ -64,18 +64,22 @@
     justify-content: center;
   }
   .zone .item.i1 {
+    min-height: 60px;
+    max-height: 20rem;
     background: #999;
   }
   .zone .item.i2 {
     background: #777;
   }
   .zone .item.i3 {
+    min-height: 70px;
     background: #555;
   }
   .zone .item.i4 {
     background: #333;
   }
   .zone .item.i5 {
+    min-height: 5em;
     background: #000;
   }
 </style>

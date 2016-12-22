@@ -29,15 +29,13 @@
         let $wrap = $(this.$parent.$el)
 
         // 父容器宽度
-        let warpClientWidth = $wrap[0].clientWidth
-        let warpClientHeight = $wrap[0].clientHeight
+        let warpClientAttr = $wrap[0][horizontal ? 'clientWidth' : 'clientHeight']
 
         // 载体本身
         let $currentHandle = $(this.$el)
 
         // 载体宽高
-        let currentHandleWidth = $currentHandle[0].clientWidth
-        let currentHandleHeight = $currentHandle[0].clientHeight
+        let currentHandleAttr = $currentHandle[0][horizontal ? 'clientWidth' : 'clientHeight']
 
         // 计算元素组的指定属性之和
         let elementsAttrs = (elements = [], attr = 'minWidth', notReduce = false) => {
@@ -61,33 +59,24 @@
           if (self.disabled) return false
 
           // 父容器绝对位置
-          let wrapOffsetLeft = $wrap.offset().left
-          let wrapOffsetTop = $wrap.offset().top
+          let wrapOffsetAttr = $wrap.offset()[horizontal ? 'left' : 'top']
 
           // 要设置的属性
           let buildStyle = horizontal ? 'width' : 'height'
 
-          // 获取前后的所有兄弟元素
+          // 前后的所有兄弟元素
           let $prevAll = $currentHandle.prevAll()
           let $nextAll = $currentHandle.nextAll()
+          // 到前后所有的Handle
           let $prevHandles = $prevAll.filter('.drag-handle')
           let $nextHandles = $nextAll.filter('.drag-handle')
+          // 到前后紧邻的Handle
           let $prevHandle = $prevHandles[0] ? $($prevHandles[0]) : null
           let $nextHandle = $nextHandles[0] ? $($nextHandles[0]) : null
-          let prevHandleOffsetLeft = null
-          let nextHandleOffsetLeft = null
-          let prevHandleOffsetTop = null
-          let nextHandleOffsetTop = null
+          // 获取到前后紧邻的Handle的距前/上距离
+          let prevHandleOffsetAttr = $prevHandle ? $($prevHandle).offset()[horizontal ? 'left' : 'top'] : null
+          let nextHandleOffsetAttr = $nextHandle ? $($nextHandle).offset()[horizontal ? 'left' : 'top'] : null
 
-          // 获取到前后紧邻的Handle的距左/上距离
-          if ($prevHandles.length) {
-            horizontal && (prevHandleOffsetLeft = $($prevHandles[0]).offset().left)
-            !horizontal && (prevHandleOffsetTop = $($prevHandles[0]).offset().top)
-          }
-          if ($nextHandles.length) {
-            horizontal && (nextHandleOffsetLeft = $($nextHandles[0]).offset().left)
-            !horizontal && (nextHandleOffsetTop = $($nextHandles[0]).offset().top)
-          }
 
           // 前面需要设置样式的元素集合
           let prevElementsToDo = $prevHandle ? $currentHandle.prevUntil('.drag-handle') : $prevAll
@@ -95,132 +84,149 @@
           // 后面需要设置样式的元素集合
           let nextElementsToDo = $nextHandle ? $currentHandle.nextUntil('.drag-handle') : $nextAll
 
-          // 前面的元素的最小宽度之和
-          let prevElementsMinWidths = elementsAttrs(prevElementsToDo)
+          // 前面的元素的最小宽度/高度之和
+          let prevElementsMinAttrs = elementsAttrs(prevElementsToDo, horizontal ? 'minWidth' : 'minHeight')
+          let prevElementsMaxAttrs = elementsAttrs(prevElementsToDo, horizontal ? 'maxWidth' : 'maxHeight')
 
-          // 前面的元素的最大宽度之和
-          let prevElementsMaxWidths = elementsAttrs(prevElementsToDo, 'maxWidth')
-
-          // 后面的元素的最小宽度之和
-          let nextElementsMinWidths = elementsAttrs(nextElementsToDo)
+          // 后面的元素的最小宽度/高度之和
+          let nextElementsMinAttrs = elementsAttrs(nextElementsToDo, horizontal ? 'minWidth' : 'minHeight')
+          let nextElementsMaxAttrs = elementsAttrs(nextElementsToDo, horizontal ? 'maxWidth' : 'maxHeight')
 
           // 监听移动
           $(document).bind('mousemove', function(event) {
 
             if (self.disabled) return false
 
-            // 鼠标X轴
-            let mouseX = event.pageX
+            // 鼠标定位
+            let mousePosition = event[horizontal ? 'pageX' : 'pageY']
 
             // 可移动的最小范围
+            // 如果后面元素有max限制，则minScope应该是
+            //    如果后面没有handle了，则是 父元素宽度 + 父元素左边距离 - 右边元素的最大宽度之和
+            //    如果后面还有handle，则应该是 父元素宽度 + 父元素左边距离 - 右边所有元素的宽度之和
+            // 如果前边有label，则应该是label的前边距加前边label的宽度
+            // 如果前边没有label，则应该是父容器的距前距离
+            // 无论什么情况，如果前边元素有min属性，则应该要加上min属性值的总和
+            let minScope
 
-            // 如果左边有label，则应该是label的左边距加左边label的宽度
-            // 如果左边没有label，则应该是父容器的距左距离
-            // 无论什么情况，如果左边元素有min属性，则应该要加上min属性值的总和
-            let minScope = ($prevHandle ? (prevHandleOffsetLeft + $prevHandle[0].clientWidth) : wrapOffsetLeft) + prevElementsMinWidths
+            if (nextElementsMaxAttrs)
+              minScope = warpClientAttr + wrapOffsetAttr - nextElementsMaxAttrs
+
+            else
+              if ($prevHandle) minScope = prevHandleOffsetAttr + $prevHandle[0][horizontal ? 'clientWidth' : 'clientHeight']
+              if (!$prevHandle) minScope = wrapOffsetAttr
+              minScope += prevElementsMinAttrs
 
             // 可移动的最大范围
 
-            // 如果左边有max，则计算出左边max的总和， + label的左边距加左边label的宽度 = max
-            // 如果左边没有max
-            //  - 如果右边有label，则应该是右边label的距左距离
-            //  - 否则是父容器宽度 + 父容器距左边距
-            //  - 无论上面任意情况，如果右边元素有min属性，则应该要减去这个属性值的总和
+            // 如果前边有max，则计算出前边max的总和， + label的前边距加前边label的宽度 = max
+            // 如果前边没有max
+            //  - 如果后边有label，则应该是后边label的距前距离
+            //  - 否则是父容器宽度 + 父容器距前边距
+            //  - 无论上面任意情况，如果后边元素有min属性，则应该要减去这个属性值的总和
             let maxScope
-            if (!!prevElementsMaxWidths) {
-              maxScope = prevElementsMaxWidths + ($prevHandle ? (prevHandleOffsetLeft + $prevHandle[0].clientWidth) : wrapOffsetLeft)
+            if (!!prevElementsMaxAttrs) {
+              if ($prevHandle) maxScope = prevHandleOffsetAttr + $prevHandle[0][horizontal ? 'clientWidth' : 'clientHeight']
+              if (!$prevHandle) maxScope = wrapOffsetAttr
+              maxScope += prevElementsMaxAttrs
             } else {
-              if (nextHandleOffsetLeft) maxScope = nextHandleOffsetLeft
-              if (!nextHandleOffsetLeft) maxScope = warpClientWidth + wrapOffsetLeft
-              maxScope -= (currentHandleWidth + nextElementsMinWidths)
+              if (nextHandleOffsetAttr) maxScope = nextHandleOffsetAttr
+              if (!nextHandleOffsetAttr) maxScope = warpClientAttr + wrapOffsetAttr
+              maxScope -= (currentHandleAttr + nextElementsMinAttrs)
             }
 
             // 限制最大最小范围
-            if (mouseX < minScope) mouseX = minScope
-            if (mouseX > maxScope) mouseX = maxScope
+            if (mousePosition < minScope) mousePosition = minScope
+            if (mousePosition > maxScope) mousePosition = maxScope
 
-            // 设置左边元素的宽度
+            // 设置前面元素的属性
             if (prevElementsToDo.length) {
-              let toDoWidth
-              if (prevHandleOffsetLeft) {
-                toDoWidth = mouseX - prevHandleOffsetLeft - currentHandleWidth
-              } else {
-                toDoWidth = mouseX - wrapOffsetLeft
-              }
 
-              // 如果toDoWidth还大于minwidth之和，则分配
-              if (toDoWidth > prevElementsMinWidths) {
+              let toDoAttr
+
+              if (prevHandleOffsetAttr)
+                toDoAttr = mousePosition - prevHandleOffsetAttr - currentHandleAttr
+
+              else
+                toDoAttr = mousePosition - wrapOffsetAttr
+
+              // 如果待分配的属性还大于最小属性之和，则分配
+              if (toDoAttr > prevElementsMinAttrs) {
 
                 // 平均值
-                let average = toDoWidth / prevElementsToDo.length
+                let average = toDoAttr / prevElementsToDo.length
 
                 // 最大minwidth
-                let prevElementsMinMaxWidth = Math.max.apply(null, elementsAttrs(prevElementsToDo, 'minWidth', true))
+                let prevElementsMinMaxAttr = Math.max.apply(null, elementsAttrs(prevElementsToDo, horizontal ? 'minWidth' : 'minHeight', true))
 
-                // console.log(average, prevElementsMinMaxWidth)
+                // console.log(average, prevElementsMinMaxAttr)
+
+                // 如果平均分配的值，大于其中任何一个拥有max-attr的元素，
+                // 则给这个元素设置width为自己的maxattr，然后把剩下的给剩下的元素在均分
 
                 // 如果平均分配的值大于最大的minwidth，则平均分配
-                if (average >= prevElementsMinMaxWidth) {
-                  prevElementsToDo.css(buildStyle, toDoWidth / prevElementsToDo.length)
+                if (average >= prevElementsMinMaxAttr) {
+                  prevElementsToDo.css(buildStyle, toDoAttr / prevElementsToDo.length)
                 } else {
                   // 否则，开始特殊分配
                   // 给有minwidth的全部width设置为自己的minwidth
-                  let notHasMinWidthElements = []
+                  let notHasMinAttrElements = []
                   Array.from(prevElementsToDo).forEach(element => {
-                    let minWidth = $(element).css('minWidth')
-                    if (minWidth !== 'auto') {
-                      $(element).css('width', minWidth)
+                    let minAttr = $(element).css(horizontal ? 'minWidth' : 'minHeight')
+                    if (minAttr !== 'auto') {
+                      $(element).css(horizontal ? 'width' : 'height', minAttr)
                     } else {
-                      notHasMinWidthElements.push(element)
+                      notHasMinAttrElements.push(element)
                     }
                   })
-                  // 给没有minwidth的设置(toDoWidth - minwidth之和) / 自己数量
-                  $(notHasMinWidthElements).css(buildStyle, (toDoWidth - prevElementsMinMaxWidth) / notHasMinWidthElements.length)
-                  // console.log($(notHasMinWidthElements))
+                  // 给没有minwidth的设置(toDoAttr - minwidth之和) / 自己数量
+                  $(notHasMinAttrElements).css(buildStyle, (toDoAttr - prevElementsMinMaxAttr) / notHasMinAttrElements.length)
+                  // console.log($(notHasMinAttrElements))
                 }
               }
             }
 
-            // 设置右边元素的宽度
+            // 设置后面元素的宽度
             if (nextElementsToDo.length) {
 
-              let toDoWidth
-              if (nextHandleOffsetLeft) {
-                toDoWidth = nextHandleOffsetLeft - mouseX
-              } else {
-                toDoWidth = warpClientWidth - (mouseX - wrapOffsetLeft)
-              }
-              toDoWidth -= currentHandleWidth
+              let toDoAttr
 
-              // 如果toDoWidth还大于minwidth之和，则分配
-              if (toDoWidth > nextElementsMinWidths) {
+              if (nextHandleOffsetAttr)
+                toDoAttr = nextHandleOffsetAttr - mousePosition
+              else
+                toDoAttr = warpClientAttr - (mousePosition - wrapOffsetAttr)
+
+              toDoAttr -= currentHandleAttr
+
+              // 如果toDoAttr还大于minwidth之和，则分配
+              if (toDoAttr > nextElementsMinAttrs) {
 
                 // 平均值
-                let average = toDoWidth / nextElementsToDo.length
+                let average = toDoAttr / nextElementsToDo.length
 
                 // 最大minwidth
-                let nextElementsMinMaxWidth = Math.max.apply(null, elementsAttrs(nextElementsToDo, 'minWidth', true))
+                let nextElementsMinMaxAttr = Math.max.apply(null, elementsAttrs(nextElementsToDo, horizontal ? 'minWidth' : 'minHeight', true))
 
-                // console.log(average, nextElementsMinMaxWidth)
+                // console.log(average, nextElementsMinMaxAttr)
 
                 // 如果平均分配的值大于最大的minwidth，则平均分配
-                if (average >= nextElementsMinMaxWidth) {
-                  nextElementsToDo.css(buildStyle, toDoWidth / nextElementsToDo.length)
+                if (average >= nextElementsMinMaxAttr) {
+                  nextElementsToDo.css(buildStyle, toDoAttr / nextElementsToDo.length)
                 } else {
                   // 否则，开始特殊分配
                   // 给有minwidth的全部width设置为自己的minwidth
-                  let notHasMinWidthElements = []
+                  let notHasMinAttrElements = []
                   Array.from(nextElementsToDo).forEach(element => {
-                    let minWidth = $(element).css('minWidth')
-                    if (minWidth !== 'auto') {
-                      $(element).css('width', minWidth)
+                    let minAttr = $(element).css(horizontal ? 'minWidth' : 'minHeight')
+                    if (minAttr !== 'auto') {
+                      $(element).css(horizontal ? 'width' : 'height', minAttr)
                     } else {
-                      notHasMinWidthElements.push(element)
+                      notHasMinAttrElements.push(element)
                     }
                   })
-                  // 给没有minwidth的设置(toDoWidth - minwidth之和) / 自己数量
-                  $(notHasMinWidthElements).css(buildStyle, (toDoWidth - nextElementsMinMaxWidth) / notHasMinWidthElements.length)
-                  // console.log($(notHasMinWidthElements))
+                  // 给没有minwidth的设置(toDoAttr - minwidth之和) / 自己数量
+                  $(notHasMinAttrElements).css(buildStyle, (toDoAttr - nextElementsMinMaxAttr) / notHasMinAttrElements.length)
+                  // console.log($(notHasMinAttrElements))
                 }
               }
             }
