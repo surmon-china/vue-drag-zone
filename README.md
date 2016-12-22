@@ -6,6 +6,9 @@
 
 [![NPM](https://nodei.co/npm/vue-drag-zone.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/vue-drag-zone/)
 
+# Vue-Drag-Zone
+Drag Zone component for Vue.js(2.x)，适用于Vue2的dom拖动组件。
+
 
 > ### v1.2.0
 > 增加：支持竖向拖动、min-height、max-height属性（还有bug，求修复）
