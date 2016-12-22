@@ -6,7 +6,7 @@
       </div>
       <md-button class="md-icon-button"
                  target="_blank"
-                 href="https://github.com/surmon-china/vue-drag-zone/tree/master/examples/05-example.vue">
+                 href="https://github.com/surmon-china/vue-drag-zone/tree/master/examples/04-example.vue">
         <md-icon>code</md-icon>
       </md-button>
     </md-card-actions>
