@@ -2,12 +2,14 @@
 [![GitHub forks](https://img.shields.io/github/forks/surmon-china/vue-drag-zone.svg?style=flat-square)](https://github.com/surmon-china/vue-drag-zone/network)
 [![GitHub stars](https://img.shields.io/github/stars/surmon-china/vue-drag-zone.svg?style=flat-square)](https://github.com/surmon-china/vue-drag-zone/stargazers)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://raw.githubusercontent.com/surmon-china/vue-drag-zone/master/LICENSE)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/vue-drag-zone.svg?style=social?style=flat-square)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
+[![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/vue-drag-zone.svg?style=social?style=flat-square)](https://twitter.com/intent/tweet?url=https://github.com/surmon-china/vue-drag-zone)
 
 [![NPM](https://nodei.co/npm/vue-drag-zone.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/vue-drag-zone/)
 
 # Vue-Drag-Zone
-Drag Zone component for Vue.js(2.x)，适用于Vue2的dom拖动组件。
+Drag Zone component for Vue2.
+
+适用于Vue2的dom拖动组件。
 
 
 > ### v1.2.0
@@ -108,4 +110,4 @@ export default {
 ```
 
 # Author Blog
-[Surmon](http://surmon.me)
+[Surmon](https://surmon.me)
