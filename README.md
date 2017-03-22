@@ -5,6 +5,7 @@
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/vue-drag-zone.svg?style=social?style=flat-square)](https://twitter.com/intent/tweet?url=https://github.com/surmon-china/vue-drag-zone)
 
 [![NPM](https://nodei.co/npm/vue-drag-zone.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/vue-drag-zone/)
+[![NPM](https://nodei.co/npm-dl/vue-drag-zone.png?months=9&height=3)](https://nodei.co/npm/vue-drag-zone/)
 
 # Vue-Drag-Zone
 Drag Zone component for Vue2.
