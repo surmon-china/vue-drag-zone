@@ -12,20 +12,11 @@ Drag Zone component for Vue2.
 
 适用于Vue2的dom拖动组件。
 
-
-> ### v1.2.0
-> 增加：支持竖向拖动、min-height、max-height属性（还有bug，求修复）
-
-> ### v1.0.0
-> 依赖jquery，支持横向拖动、disabled、min-width、max-width属性
-
-
 # Example
 [Demo Page](https://surmon-china.github.io/vue-drag-zone/)
 
 
 # Use Setup
-
 
 ### Install vue-drag-zone
 
