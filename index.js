@@ -7,13 +7,14 @@
 
 var dragZone = require('./zone.vue')
 var dragHandle = require('./handle.vue')
+dragHandle = dragHandle.default || dragHandle
 
 var VueDragZone = {
-  dragZone,
-  dragHandle,
+  dragZone: dragZone,
+  dragHandle: dragHandle,
   install(Vue) {
-    Vue.component('drag-zone', dragZone)
-    Vue.component('drag-handle', dragHandle)
+    Vue.component(dragZone.name, dragZone)
+    Vue.component(dragHandle.name, dragHandle)
   }
 }
 

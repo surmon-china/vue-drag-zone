@@ -1,6 +1,6 @@
 {
   "name": "vue-drag-zone",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Drag Zone component for Vue.js(2.x)",
   "main": "index.js",
   "scripts": {
