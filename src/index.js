@@ -14,7 +14,7 @@ const install = function (Vue) {
   Vue.component(dragHandle.name, dragHandle)
   Vue.component(dragContent.name, dragContent)
 }
-const VueDragZone = { dragZone, dragHandle, dragContent, install };
+const VueDragZone = { dragZone, dragHandle, dragContent, install }
 
 export default VueDragZone
 export { dragZone, dragHandle, dragContent, install }
