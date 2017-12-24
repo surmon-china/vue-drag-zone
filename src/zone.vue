@@ -16,10 +16,17 @@
           }
         }
       }
+    },
+    computed: {
+      horizontal() {
+        return this.options.direction === 'horizontal'
+      }
     }
   }
 </script>
 
 <style scoped>
-  .drag-zone {}
+  .drag-zone {
+    position: relative;
+  }
 </style>

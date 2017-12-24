@@ -2,7 +2,7 @@
   <md-card>
     <md-card-actions>
       <div class="md-subhead">
-        <span>Horizontal MinWidth and MaxWidth Example</span>
+        <span>Horizontal MinWidth and MaxWidth</span>
       </div>
       <md-button class="md-icon-button"
                  target="_blank"
@@ -13,14 +13,24 @@
     <md-card-media>
       <!-- drag-zone -->
       <drag-zone class="zone">
-        <div class="item i1">min 100px && max 30rem</div>
+        <drag-content class="content c1">
+          <div class="item i1">min 100px && max 30rem</div>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i2">item2</div>
+        <drag-content class="content c2">
+          <div class="item i2">item 2</div>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i3">item3</div>
-        <div class="item i4">min 50px</div>
+        <drag-content class="content c3">
+          <div class="item i3">item 3</div>
+        </drag-content>
+        <drag-content class="content c4">
+          <div class="item i4">min 50px</div>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i5">min 10em</div>
+        <drag-content class="content c5">
+          <div class="item i5">min 10em</div>
+        </drag-content>
       </drag-zone>
     </md-card-media>
   </md-card>
@@ -55,26 +65,29 @@
     background: #2196f3;
   }
   .zone .item {
+    width: 100%;
+  }
+  .zone .content {
     width: calc((100% - 30px) / 4);
     height: 180px;
     overflow: hidden;
   }
-  .zone .item.i1 {
+  .zone .content.c1 {
     min-width: 100px;
     max-width: 30rem;
     background: #999;
   }
-  .zone .item.i2 {
+  .zone .content.c2 {
     background: #777;
   }
-  .zone .item.i3 {
+  .zone .content.c3 {
     background: #555;
   }
-  .zone .item.i4 {
+  .zone .content.c4 {
     min-width: 50px;
     background: #333;
   }
-  .zone .item.i5 {
+  .zone .content.c5 {
     min-width: 10em;
     background: #000;
   }

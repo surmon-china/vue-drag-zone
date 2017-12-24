@@ -2,7 +2,7 @@
   <md-card>
     <md-card-actions>
       <div class="md-subhead">
-        <span>Vertical Nested Example</span>
+        <span>Vertical Nested</span>
       </div>
       <md-button class="md-icon-button"
                  target="_blank"
@@ -13,25 +13,43 @@
     <md-card-media>
       <!-- drag-zone -->
       <drag-zone class="vertical-zone" :options="{ direction: 'vertical' }">
-        <div class="item i1">item1</div>
+        <drag-content class="content c1">
+          <div class="item i1">item 1</div>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i2">item2</div>
-        <div class="item i3">item3</div>
+        <drag-content class="content c2">
+          <div class="item i2">item 2</div>
+        </drag-content>
+        <drag-content class="content c3">
+          <div class="item i3">item 3</div>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i4">
-        <drag-zone class="horizontal-zone">
-          <div class="item i1">min 100px && max 30rem</div>
-          <drag-handle class="handle"></drag-handle>
-          <div class="item i2">item2</div>
-          <drag-handle class="handle"></drag-handle>
-          <div class="item i3">item3</div>
-          <div class="item i4">min 50px</div>
-          <drag-handle class="handle"></drag-handle>
-          <div class="item i5">min 10em</div>
-        </drag-zone>
-        </div>
+        <drag-content class="content c4">
+          <drag-zone class="horizontal-zone">
+            <drag-content class="content c1">
+              <div class="item i1">min 100px && max 30rem</div>
+            </drag-content>
+            <drag-handle class="handle"></drag-handle>
+            <drag-content class="content c2">
+              <div class="item i2">item 2</div>
+            </drag-content>
+            <drag-handle class="handle"></drag-handle>
+            <drag-content class="content c3">
+              <div class="item i3">item 3</div>
+            </drag-content>
+            <drag-content class="content c4">
+              <div class="item i4">min 50px</div>
+            </drag-content>
+            <drag-handle class="handle"></drag-handle>
+            <drag-content class="content c5">
+              <div class="item i5">item 5</div>
+            </drag-content>
+          </drag-zone>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i5">item5</div>
+        <drag-content class="content c5">
+          <div class="item i5">item 5</div>
+        </drag-content>
       </drag-zone>
     </md-card-media>
   </md-card>
@@ -60,12 +78,12 @@
     justify-content: space-between;
     flex-direction: column;
   }
-  .vertical-zone >.handle {
+  .vertical-zone > .handle {
     width: 100%;
     height: 10px;
     background: #2196f3;
   }
-  .vertical-zone >.item {
+  .vertical-zone > .content {
     width: 100%;
     height: calc((100% - 30px) / 4);
     overflow: hidden;
@@ -74,19 +92,19 @@
     align-items: center;
     justify-content: center;
   }
-  .vertical-zone >.item.i1 {
+  .vertical-zone > .content.c1 {
     background: #999;
   }
-  .vertical-zone >.item.i2 {
+  .vertical-zone > .content.c2 {
     background: #777;
   }
-  .vertical-zone >.item.i3 {
+  .vertical-zone > .content.c3 {
     background: #555;
   }
-  .vertical-zone >.item.i4 {
+  .vertical-zone > .content.c4 {
     background: #333;
   }
-  .vertical-zone >.item.i5 {
+  .vertical-zone > .content.c5 {
     background: #000;
   }
   .horizontal-zone {
@@ -101,12 +119,15 @@
     display: flex;
     justify-content: space-between;
   }
-  .horizontal-zone >.handle {
+  .horizontal-zone > .handle {
     width: 10px;
     height: 100%;
     background: #2196f3;
   }
-  .horizontal-zone >.item {
+  .horizontal-zone > .content > .item {
+    width: 100%;
+  }
+  .horizontal-zone > .content {
     width: calc((100% - 30px) / 4);
     height: 100%;
     overflow: hidden;
@@ -114,22 +135,22 @@
     align-items: center;
     justify-content: center;
   }
-  .horizontal-zone >.item.i1 {
+  .horizontal-zone > .content.c1 {
     min-width: 100px;
     max-width: 30rem;
     background: #999;
   }
-  .horizontal-zone >.item.i2 {
+  .horizontal-zone > .content.c2 {
     background: #777;
   }
-  .horizontal-zone >.item.i3 {
+  .horizontal-zone > .content.c3 {
     background: #555;
   }
-  .horizontal-zone >.item.i4 {
+  .horizontal-zone > .content.c4 {
     min-width: 50px;
     background: #333;
   }
-  .horizontal-zone >.item.i5 {
+  .horizontal-zone > .content.c5 {
     min-width: 10em;
     background: #000;
   }

@@ -2,7 +2,7 @@
   <md-card>
     <md-card-actions>
       <div class="md-subhead">
-        <span>Horizontal Base Example</span>
+        <span>Horizontal Base Mode</span>
       </div>
       <md-button class="md-icon-button"
                  target="_blank"
@@ -13,14 +13,24 @@
     <md-card-media>
       <!-- drag-zone -->
       <drag-zone class="zone">
-        <div class="item i1">item1</div>
+        <drag-content class="content c1">
+          <div class="item i1">item 1</div>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i2">item2</div>
+        <drag-content class="content c2">
+          <div class="item i2">item 2</div>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i3">item3</div>
-        <div class="item i4">item4</div>
+        <drag-content class="content c3">
+          <div class="item i3">item 3</div>
+        </drag-content>
+        <drag-content class="content c4">
+          <div class="item i4">item 4</div>
+        </drag-content>
         <drag-handle class="handle"></drag-handle>
-        <div class="item i5">item5</div>
+        <drag-content class="content c5">
+          <div class="item i5">item 5</div>
+        </drag-content>
       </drag-zone>
     </md-card-media>
   </md-card>
@@ -54,10 +64,13 @@
     height: 180px;
     background: #2196f3;
   }
-  .zone .item {
+  .zone .content {
     width: calc((100% - 30px) / 4);
     height: 180px;
     overflow: hidden;
+  }
+  .zone .item {
+    width: 100%;
   }
   .zone .item.i1 {
     background: #999;
