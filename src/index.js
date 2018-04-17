@@ -2,7 +2,7 @@
 /*
 * Vue-Drag-Zone
 * Author: surmon@foxmail.com
-* Github: https://github.com/surmon-china/vue-awesome-swiper
+* Github: https://github.com/surmon-china/vue-drag-zone
 */
 
 import dragZone from './zone.vue'
@@ -17,4 +17,3 @@ const install = function (Vue) {
 const VueDragZone = { dragZone, dragHandle, dragContent, install }
 
 export default VueDragZone
-export { dragZone, dragHandle, dragContent, install }
