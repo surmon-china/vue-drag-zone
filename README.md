@@ -5,7 +5,6 @@
 [![GitHub forks](https://img.shields.io/github/forks/surmon-china/vue-drag-zone.svg?style=flat-square)](https://github.com/surmon-china/vue-drag-zone/network)
 [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat-square)](https://github.com/surmon-china/vue-drag-zone)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/surmon-china/vue-drag-zone)
-[![Twitter](https://img.shields.io/twitter/url/https/github.com/surmon-china/vue-drag-zone.svg?style=flat-square)](https://twitter.com/intent/tweet?url=https://github.com/surmon-china/vue-drag-zone)
 
 
 [![NPM](https://nodei.co/npm/vue-drag-zone.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/vue-drag-zone/)
@@ -14,15 +13,13 @@
 
 # Vue-Drag-Zone
 Drag Zone component for Vue.
-
 适用于 Vue 的 DOM 拖动组件。
 
 
-# Example
+### Example
+[Example Page](https://github.surmon.me/vue-drag-zone)
 
-[Demo Page](https://surmon-china.github.io/vue-drag-zone)
-
-# Install
+### Install
 
 #### CDN
 
@@ -67,7 +64,7 @@ export default {
 
 ### component
 
-```vue
+```html
 <template>
   <!-- base use -->
   <drag-zone class="zone">
@@ -113,6 +110,3 @@ export default {
   </drag-zone>
 </template>
 ```
-
-# Author
-[Surmon](https://surmon.me)

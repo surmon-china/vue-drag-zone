@@ -1,11 +1,13 @@
 <template>
-  <div class="drag-handle"
-       @mousedown="handleMouseDown"
-       :class="{ 
-        'disabled': disabled,
-        'horizontal': direction === 'horizontal',
-        'vertical': direction === 'vertical'
-      }">
+  <div
+    class="drag-handle"
+    @mousedown="handleMouseDown"
+    :class="{ 
+      'disabled': disabled,
+      'horizontal': direction === 'horizontal',
+      'vertical': direction === 'vertical'
+    }"
+  >
     <slot></slot>
   </div>
 </template>
@@ -46,9 +48,11 @@
       // 获取所有同级手柄组件
       getAllHandles() {
         return this.$parent.$children.filter(com => {
-          return com.$vnode && 
-                 com.$vnode.componentOptions && 
-                 com.$vnode.componentOptions.tag === 'drag-handle'
+          return (
+            com.$vnode &&
+            com.$vnode.componentOptions && 
+            com.$vnode.componentOptions.tag === 'drag-handle'
+          )
         })
       },
       // 分割前面和后面的所有兄弟手柄组件

@@ -1,7 +1,9 @@
 <template>
-  <div class="drag-content" 
-       :class="{ threshold: isThreshold }" 
-       :style="style">
+  <div
+    class="drag-content" 
+    :class="{ threshold: isThreshold }" 
+    :style="style"
+  >
     <slot></slot>
   </div>
 </template>
