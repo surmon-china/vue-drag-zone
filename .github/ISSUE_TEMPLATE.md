@@ -17,6 +17,6 @@
 
 #### Steps to reproduce
 
-#### What is Expected?      
+#### What is Expected?
 
 #### What is actually happening?
