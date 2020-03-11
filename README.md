@@ -6,7 +6,6 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat-square)](https://github.com/surmon-china/vue-drag-zone)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/surmon-china/vue-drag-zone)
 
-
 [![NPM](https://nodei.co/npm/vue-drag-zone.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/vue-drag-zone/)
 [![NPM](https://nodei.co/npm-dl/vue-drag-zone.png?months=9&height=3)](https://nodei.co/npm/vue-drag-zone/)
 
